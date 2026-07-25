@@ -45,11 +45,13 @@ export async function processActions(env: Env) {
   const now = new Date();
   const twoWeeksAgo = subDays(now, LOOKBACK_DAYS);
 
+  // Deliberately excludes pending transactions (the default): matching a
+  // still-pending charge risks writing the note to a transaction row that
+  // gets discarded once the bank replaces it with the final posted one.
   const params = new URLSearchParams({
     start_date: format(twoWeeksAgo, 'yyyy-MM-dd'),
     end_date: format(now, 'yyyy-MM-dd'),
     status: 'uncleared',
-    pending: 'true',
   });
 
   const txnsResp = await lunchMoneyApi(env, `/transactions?${params}`);
