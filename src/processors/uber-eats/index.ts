@@ -12,16 +12,16 @@ const UBER_EATS_RESTAURANT_REGEX = /Here's your receipt for (.+)\.$/m;
 
 /**
  * Matches the order total in USD
- * Example: "Total $50.54"
+ * Example: "Total$50.54" (adjacent table cells render with no space between them)
  */
-const UBER_EATS_TOTAL_COST_REGEX = /^Total\s+\$(\d+(?:,\d{3})*\.\d{2})$/m;
+const UBER_EATS_TOTAL_COST_REGEX = /^Total\s*\$(\d+(?:,\d{3})*\.\d{2})$/m;
 
 /**
  * Matches the pickup (restaurant) and delivery time/address lines
- * Example: "6:16 PM - Pickup 1 Dupont Cir NW, Washington DC, DC 20036, US"
+ * Example: "6:16 PM - Pickup1 Dupont Cir NW, Washington DC, DC 20036, US"
  */
-const UBER_EATS_PICKUP_REGEX = /(\d{1,2}:\d{2}\s*(?:AM|PM)) - Pickup (.+)/;
-const UBER_EATS_DELIVERY_REGEX = /(\d{1,2}:\d{2}\s*(?:AM|PM)) - Delivery (.+)/;
+const UBER_EATS_PICKUP_REGEX = /(\d{1,2}:\d{2}\s*(?:AM|PM)) - Pickup\s*(.+)/;
+const UBER_EATS_DELIVERY_REGEX = /(\d{1,2}:\d{2}\s*(?:AM|PM)) - Delivery\s*(.+)/;
 
 function process(email: Email) {
   const emailText = htmlToText(email.html!);
