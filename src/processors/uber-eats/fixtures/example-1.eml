@@ -1,0 +1,260 @@
+Date: Fri, 17 Jul 2026 00:26:37 +0000
+Mime-Version: 1.0
+Subject: [Personal] Your Thursday evening order with Uber Eats
+From: Uber Receipts <noreply@uber.com>
+To: testuser@example.com
+Message-Id: <REDACTED@example.com>
+Reply-To: no-reply@replies.uber.com
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+<!doctype html>
+<html>
+<head><title></title></head>
+<body style="background-color:#d6d6d5">
+<table width="100%"><tr><td></td><td align="center" width="700">
+<table class="receipt" align="center">
+<tbody><tr><td>
+<div>
+<div class="header" style="background:#e8e8e8">
+<table class="header-table-row">
+<tbody>
+<tr>
+<td class="header-table-cell"><table><tbody><tr><td><img src="https://tb-static.uber.com/prod/receipts/cdn/receipts-v4/eats-logo.png" width="169" height="44"></td></tr></tbody></table></td>
+<td class="desktop-content header-table-cell-with-text" align="right"><div class="date">Jul 16, 2026</div><div class="date">6:03 PM</div></td>
+</tr>
+</tbody>
+</table>
+<table class="header-table-row">
+<tbody>
+<tr><td class="header-table-cell-with-text"></td></tr>
+<tr><td class="membershipLogo-container"><img src="https://tb-static.uber.com/prod/receipts/cdn/receipts-v4/UO_logo.png" width="93" height="32"></td></tr>
+<tr>
+<td>
+<table>
+<tbody>
+<tr>
+<td class="header-table-cell-with-text">
+<div class="headerMessage">Thanks for ordering, testuser</div>
+<br>
+<div>Here's your receipt for Boogy &amp; Peel (Dupont).</div>
+</td>
+<td class="desktop-content header-table-cell" align="right"><img src="https://tb-static.uber.com/prod/receipts/cdn/receipts-v4/eats-bowl.png" height="162"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body-wrapper">
+<table class="body-root">
+<tbody>
+<tr>
+<td class="body-content">
+<div class="total-fare-wrapper">
+<table class="total-fare-content received">
+<tbody>
+<tr>
+<td data-testid="total_fare_title" class="total-fare-title">Total</td>
+<td data-testid="total_fare_amount" class="total-fare-amount">$50.54</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="notification-wrapper">
+<table class="notification info">
+<tbody><tr><td class="notification-content">
+<div data-testid="notification_0_text">To view your full receipt go to <a href="https://email.mgt.uber.com/c/example">Uber Eats</a>, or <a href="https://email.mgt.uber.com/c/example">download this PDF</a></div>
+</td></tr></tbody>
+</table>
+</div>
+
+<table>
+<tr class="benefit-container">
+<td width="49%" class="benefit-box">
+<table class="benefit-box-table">
+<tr>
+<td width="32"><img src="https://tb-static.uber.com/prod/receipts/cdn/receipts-v4/one-savings.png" width="20" height="20"></td>
+<td>
+<table>
+<tr><td style="color:#9f6402">$24.72</td></tr>
+<tr><td class="benefit-text">Uber One savings and other promotions applied</td></tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+<div class="panel-wrapper">
+<table class="panel-content">
+<tbody>
+<tr><td class="panel-title">Payments</td></tr>
+<tr><td class="panel-content">
+<div class="payments-wrapper">
+<table class="payments-content">
+<tbody>
+<tr>
+<td class="payment-item">
+<table>
+<tbody>
+<tr>
+<td width="55"><img src="https://tb-static.uber.com/prod/wallet/icons/american_express_3x.png" width="35" height="32"></td>
+<td>
+<table>
+<tbody>
+<tr>
+<td>
+<table>
+<tbody>
+<tr>
+<td data-testid="payments_0_Card.String" align="left">American Express &bull;&bull;&bull;&bull;1234</td>
+<td data-testid="payments_0_AmountCharged" align="right"><font>$50.54</font></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<table>
+<tbody>
+<tr>
+<td data-testid="payments_0_date_time" class="payment-meta-text" align="left">7/16/26 6:35 PM</td>
+<td data-testid="payments_0_Info" class="payment-meta-text" align="right"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="disclaimers-wrapper">
+<table class="disclaimers-list-item">
+<tbody><tr>
+<td class="disclaimer-text" width="80%">Want to switch your payment method?</td>
+<td class="disclaimer-button" width="20%" align="center"><a href="https://email.mgt.uber.com/c/example">Switch</a></td>
+</tr></tbody>
+</table>
+
+<table class="disclaimers-list-item">
+<tbody><tr>
+<td class="disclaimer-text" width="100%">Receipt ID # 41336cb2-2847-511a-9a51-6badce4473a8</td>
+</tr></tbody>
+</table>
+</div>
+
+<table style="display:table">
+<tr><td style="font-size:1.5rem">Order Details</td></tr>
+<tr><td>
+<table>
+<tr>
+<td width="68"><img src="https://tb-static.uber.com/prod/receipts/cdn/receipts-v4/eats-bowl.png" width="68" height="68"></td>
+<td class="vehicle-detail-col">
+<table>
+<tr><td class="vehicle-detail-label" data-testid="vehicle_type">Uber Delivery</td></tr>
+<tr><td class="vehicle-detail-desc" data-testid="distance_duration"></td></tr>
+</table>
+</td>
+</tr>
+</table>
+</td></tr>
+<tr><td>
+<table class="desktop-content">
+<tr>
+<td class="desktop-content">
+<table>
+<tr><td></td></tr>
+<tr>
+<td class="hidden" width="8"></td>
+<td class="pickup-icon-2 hidden" width="2"></td>
+<td class="hidden" width="8"></td>
+<td class="hidden" style="padding-bottom:29px">
+<table>
+<tr><td class="address-point-label" data-testid="address_point_0_time" align="left">6:16 PM - Pickup</td></tr>
+<tr><td class="address-point-desc" data-testid="address_point_0_address">1 Dupont Cir NW, Washington DC, DC 20036, US</td></tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="hidden" width="8"></td>
+<td class="dropoff-icon-2 hidden" width="2"></td>
+<td class="hidden" width="8"></td>
+<td class="hidden" style="padding-bottom:12px">
+<table>
+<tr><td class="address-point-label" data-testid="address_point_1_time" align="left">6:34 PM - Delivery</td></tr>
+<tr><td class="address-point-desc" data-testid="address_point_1_address">123 Test Street, Test City, TS 12345, US</td></tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+<td class="desktop-content" style="width:50%"><img width="312" src="https://tb-static.uber.com/prod/image-proc/processed_images/example.jpeg"></td>
+</tr>
+</table>
+</td></tr>
+</table>
+
+<div class="action-panel-wrapper">
+<table class="action-panel">
+<tbody><tr><td class="action-panel-content">
+<table>
+<tbody>
+<tr><td data-testid="driverInfo_title" class="action-panel-title">Delivered by Sayed hamayoun</td></tr>
+<tr><td class="action-panel-message">Say thanks with a rating or tip for the courier or restaurant.</td></tr>
+<tr><td class="action-panel-button" align="center"><a href="https://email.mgt.uber.com/c/example" data-testid="driverInfo_actionUrl">Rate your order</a></td></tr>
+</tbody>
+</table>
+</td></tr></tbody>
+</table>
+</div>
+
+<div class="panel-wrapper">
+<table class="panel-content">
+<tbody>
+<tr><td class="panel-title"></td></tr>
+<tr><td class="panel-content">
+<div class="additional-info-wrapper">
+<table class="additional-info-item">
+<tbody><tr>
+<td class="additional-info-label">Order completed</td>
+<td class="additional-info-value" align="right">Jul 16, 2026 at 6:34 PM</td>
+</tr></tbody>
+</table>
+</div>
+</td></tr>
+</tbody>
+</table>
+</div>
+
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</td><td></td></tr></table>
+</body>
+</html>
