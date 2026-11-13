@@ -1,8 +1,32 @@
-import {format, subDays} from 'date-fns';
+import {addDays, format, parseISO, subDays} from 'date-fns';
 
 import type {LunchMoneyAction, LunchMoneyActionRow} from './types';
 
 const LOOKBACK_DAYS = 180;
+
+/**
+ * How many days after the receipt date a matching transaction may be dated.
+ */
+const RECEIPT_DATE_WINDOW_DAYS = 5;
+
+/**
+ * How many days before the receipt date a matching transaction may be
+ * dated. Email Date headers are often UTC, so an evening charge in the
+ * Americas carries the next day's date.
+ */
+const RECEIPT_DATE_EARLY_DAYS = 1;
+
+function isNearReceiptDate(txnDate: string, receiptDate: string | undefined) {
+  if (receiptDate === undefined) {
+    return true;
+  }
+
+  const receipt = parseISO(receiptDate);
+  const earliest = format(subDays(receipt, RECEIPT_DATE_EARLY_DAYS), 'yyyy-MM-dd');
+  const latest = format(addDays(receipt, RECEIPT_DATE_WINDOW_DAYS), 'yyyy-MM-dd');
+
+  return txnDate >= earliest && txnDate <= latest;
+}
 
 async function lunchMoneyApi(env: Env, endpoint: string, options: RequestInit = {}) {
   const url = `https://dev.lunchmoney.app/v1${endpoint}`;
@@ -76,7 +100,8 @@ export async function processActions(env: Env) {
           !assignedTransactions.includes(txn.id) &&
           !hasNote(txn.notes) &&
           txn.payee === action.match.expectedPayee &&
-          txn.amount === (action.match.expectedTotal / 100).toFixed(4),
+          txn.amount === (action.match.expectedTotal / 100).toFixed(4) &&
+          isNearReceiptDate(txn.date, action.match.receiptDate),
       );
 
     // if we can't find the transaction skip it

@@ -28,6 +28,13 @@ const RECEIPT_CHECKIN_REGEX = /Check-in\s+(?:\w+,\s+)?(\w+\s+\d{1,2},\s+\d{4})/;
 const RECEIPT_CHECKOUT_REGEX = /Check-out\s+(?:\w+,\s+)?(\w+\s+\d{1,2},\s+\d{4})/;
 
 /**
+ * Matches the date of a payment scheduled after the confirmation email.
+ * Example: "You scheduled a payment for this booking ... Feb 27, 2026"
+ */
+const SCHEDULED_PAYMENT_DATE_REGEX =
+  /You scheduled a payment for this booking[\s\S]+?(\w{3} \d{1,2}, \d{4})/;
+
+/**
  * Matches the amount paid in USD format from receipt or confirmation emails.
  * Examples:
  *   "Amount paid on Feb 20, 2025\n   US$1,180.38"
@@ -46,6 +53,7 @@ function process(email: Email) {
   const checkInMatch = emailText.match(RECEIPT_CHECKIN_REGEX);
   const checkOutMatch = emailText.match(RECEIPT_CHECKOUT_REGEX);
   const amountMatch = emailText.match(RECEIPT_AMOUNT_REGEX);
+  const scheduledMatch = emailText.match(SCHEDULED_PAYMENT_DATE_REGEX);
 
   // Only process USD receipts - ignore other currencies
   if (!amountMatch) {
@@ -83,6 +91,11 @@ function process(email: Email) {
     expectedPayee: 'Booking.com',
     expectedTotal: totalCents,
   };
+
+  if (scheduledMatch) {
+    const scheduledDate = parse(scheduledMatch[1], 'MMM d, yyyy', new Date());
+    match.receiptDate = format(scheduledDate, 'yyyy-MM-dd');
+  }
 
   const updateAction: LunchMoneyUpdate = {type: 'update', match, note};
 

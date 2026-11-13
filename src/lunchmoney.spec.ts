@@ -353,6 +353,164 @@ describe('processActions', () => {
     );
   });
 
+  it('matches only transactions dated near the receipt date', async () => {
+    const action: LunchMoneyAction = {
+      type: 'update',
+      match: {expectedPayee: 'Steam', expectedTotal: 1999, receiptDate: '2025-06-10'},
+      note: 'June game',
+    };
+
+    await env.DB.prepare('INSERT INTO lunchmoney_actions (source, action) VALUES (?, ?)')
+      .bind('test', JSON.stringify(action))
+      .run();
+
+    const mockTransactions = [
+      createTestTransaction({
+        id: 202,
+        payee: 'Steam',
+        amount: '19.9900',
+        date: '2025-06-12',
+      }),
+      createTestTransaction({
+        id: 101,
+        payee: 'Steam',
+        amount: '19.9900',
+        date: '2025-02-03',
+      }),
+    ];
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: transactionsListPath})
+      .reply(200, createMockTransactionsResponse(mockTransactions));
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: '/v1/transactions/202', method: 'PUT'})
+      .reply(200, {success: true});
+
+    await processActions(env);
+
+    const remainingActions = await getAllTransactions();
+    expect(remainingActions.results).toHaveLength(0);
+  });
+
+  it('matches a transaction dated the day before a UTC receipt date', async () => {
+    const action: LunchMoneyAction = {
+      type: 'update',
+      match: {expectedPayee: 'Apple', expectedTotal: 999, receiptDate: '2024-03-15'},
+      note: 'Evening purchase',
+    };
+
+    await env.DB.prepare('INSERT INTO lunchmoney_actions (source, action) VALUES (?, ?)')
+      .bind('test', JSON.stringify(action))
+      .run();
+
+    const mockTransactions = [
+      createTestTransaction({
+        id: 303,
+        payee: 'Apple',
+        amount: '9.9900',
+        date: '2024-03-14',
+      }),
+    ];
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: transactionsListPath})
+      .reply(200, createMockTransactionsResponse(mockTransactions));
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: '/v1/transactions/303', method: 'PUT'})
+      .reply(200, {success: true});
+
+    await processActions(env);
+
+    const remainingActions = await getAllTransactions();
+    expect(remainingActions.results).toHaveLength(0);
+  });
+
+  it('skips transactions dated outside the receipt date window', async () => {
+    const action: LunchMoneyAction = {
+      type: 'update',
+      match: {expectedPayee: 'Steam', expectedTotal: 1999, receiptDate: '2025-06-10'},
+      note: 'June game',
+    };
+
+    await env.DB.prepare('INSERT INTO lunchmoney_actions (source, action) VALUES (?, ?)')
+      .bind('test', JSON.stringify(action))
+      .run();
+
+    const mockTransactions = [
+      createTestTransaction({
+        id: 404,
+        payee: 'Steam',
+        amount: '19.9900',
+        date: '2025-06-16',
+      }),
+      createTestTransaction({
+        id: 405,
+        payee: 'Steam',
+        amount: '19.9900',
+        date: '2025-06-08',
+      }),
+    ];
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: transactionsListPath})
+      .reply(200, createMockTransactionsResponse(mockTransactions));
+
+    for (const id of [404, 405]) {
+      fetchMock
+        .get('https://dev.lunchmoney.app')
+        .intercept({path: `/v1/transactions/${id}`, method: 'PUT'})
+        .reply(200, {success: true});
+    }
+
+    await processActions(env);
+
+    const remainingActions = await getAllTransactions();
+    expect(remainingActions.results).toHaveLength(1);
+  });
+
+  it('matches any transaction date for actions without a receipt date', async () => {
+    const action: LunchMoneyAction = {
+      type: 'update',
+      match: {expectedPayee: 'Steam', expectedTotal: 1999},
+      note: 'Queued before receipt dates were recorded',
+    };
+
+    await env.DB.prepare('INSERT INTO lunchmoney_actions (source, action) VALUES (?, ?)')
+      .bind('test', JSON.stringify(action))
+      .run();
+
+    const mockTransactions = [
+      createTestTransaction({
+        id: 505,
+        payee: 'Steam',
+        amount: '19.9900',
+        date: '2025-02-03',
+      }),
+    ];
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: transactionsListPath})
+      .reply(200, createMockTransactionsResponse(mockTransactions));
+
+    fetchMock
+      .get('https://dev.lunchmoney.app')
+      .intercept({path: '/v1/transactions/505', method: 'PUT'})
+      .reply(200, {success: true});
+
+    await processActions(env);
+
+    const remainingActions = await getAllTransactions();
+    expect(remainingActions.results).toHaveLength(0);
+  });
+
   it('marks update transaction as cleared when markReviewed is true', async () => {
     const action: LunchMoneyAction = {
       type: 'update',

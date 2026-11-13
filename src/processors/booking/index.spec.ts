@@ -25,7 +25,11 @@ const testCases = [
     file: 'confirmation-usd',
     expected: {
       type: 'update',
-      match: {expectedPayee: 'Booking.com', expectedTotal: 152633},
+      match: {
+        expectedPayee: 'Booking.com',
+        expectedTotal: 152633,
+        receiptDate: '2026-02-27',
+      },
       note: 'Holiday Inn San Francisco - Golden Gateway newly renovated with No Resort Fee — Mar 8–Mar 12 (4 nights)',
     },
   },

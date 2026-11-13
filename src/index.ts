@@ -3,6 +3,7 @@ import {
   consoleLoggingIntegration,
   withSentry,
 } from '@sentry/cloudflare';
+import {format, isValid} from 'date-fns';
 import {Hono} from 'hono';
 import {bearerAuth} from 'hono/bearer-auth';
 import type {Email} from 'postal-mime';
@@ -32,6 +33,15 @@ function recordAction(action: LunchMoneyAction, source: string, env: Env) {
     .run();
 }
 
+/**
+ * The email's Date header as yyyy-MM-dd, for processors that found no
+ * better charge date.
+ */
+function emailReceiptDate(email: Email) {
+  const date = new Date(email.date ?? '');
+  return isValid(date) ? format(date, 'yyyy-MM-dd') : undefined;
+}
+
 async function processEmail(email: Email, env: Env) {
   console.log(`Processing email from: ${email.from?.address}`);
 
@@ -52,7 +62,9 @@ async function processEmail(email: Email, env: Env) {
     try {
       const action = await processor.process(email, env);
       if (action !== null) {
-        await recordAction(action, processor.identifier, env);
+        const receiptDate = action.match.receiptDate ?? emailReceiptDate(email);
+        const match = {...action.match, receiptDate};
+        await recordAction({...action, match}, processor.identifier, env);
       }
     } catch (error) {
       captureException(error);

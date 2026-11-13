@@ -95,6 +95,32 @@ describe('/ingest Endpoint', () => {
     expect(results).toHaveLength(1);
     expect(results[0].action).toEqual(JSON.stringify(exampleAction));
   });
+
+  it('records the email Date header as the receipt date', async () => {
+    const email = [
+      'Date: Wed, 9 Jul 2025 14:39:10 -0700',
+      'From: receipts@example.com',
+      'Subject: Your receipt',
+      '',
+      'Thanks for your order.',
+    ].join('\r\n');
+
+    const request = new Request('http://localhost/ingest', {
+      method: 'POST',
+      headers: {Authorization: `Bearer ${env.INGEST_TOKEN}`},
+      body: btoa(email),
+    });
+
+    const response = await SELF.fetch(request);
+    expect(response.status).toBe(202);
+
+    const {results} = await env.DB.prepare('SELECT * FROM lunchmoney_actions').all();
+    expect(results).toHaveLength(1);
+    expect(JSON.parse(results[0].action as string)).toEqual({
+      ...exampleAction,
+      match: {...exampleAction.match, receiptDate: '2025-07-09'},
+    });
+  });
 });
 
 describe('/process Endpoint', () => {
