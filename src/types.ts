@@ -24,6 +24,11 @@ export interface LunchMoneyMatch {
    * The expected total to match in lunchmoney in cents
    */
   expectedTotal: number;
+  /**
+   * Date of the charge (yyyy-MM-dd). Missing on actions queued before it
+   * was recorded; those match a transaction of any date.
+   */
+  receiptDate?: string;
 }
 
 export interface LunchMoneySplit {
